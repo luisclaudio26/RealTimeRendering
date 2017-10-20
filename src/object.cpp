@@ -30,6 +30,9 @@ void Object::set_view_projection(const glm::mat4& vp)
 void Object::set_shader_program(const std::string& path)
 {
 	this->h_program = ShaderLoader::load(path);
+
+	//request handlers for this shader
+	this->request_handlers();
 }
 
 void Object::request_handlers()

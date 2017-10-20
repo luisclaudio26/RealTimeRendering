@@ -1,8 +1,8 @@
 #version 330
 
-out vec3 color;
+in vec4 vertexColor;
 
 void main() 
 {
-	color = vec3(1,0,0);
+	gl_FragColor = vertexColor;
 }

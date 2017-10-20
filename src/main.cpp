@@ -9,6 +9,8 @@
 #include "../include/shader_loader.h"
 #include "../include/cube.h"
 
+#define PI 3.14159265359
+
 GLFWwindow* setup();
 
 int main(int argc, char** args)
@@ -26,63 +28,24 @@ int main(int argc, char** args)
 
 	glm::mat4 PV = proj*view;
 
-
-	
 	Cube cube;
 	cube.set_view_projection(PV);
 	cube.set_shader_program("../shaders/flat");
-	cube.request_handlers();
 	cube.load_geometry();
-	
-	/*
-	GLenum err;
 
-	GLuint programID = ShaderLoader::load("../shaders/flat");
 
-	float cube_v[] = { 0.0f, 1.0f, 0.0f, 
-		               -1.0f, 0.0f, 0.0f,
-						1.0f, 0.0f, 0.0f};
-
-	unsigned int cube_e[] = { 0, 1, 2 };
-
-	//Load data into buffers
-	GLuint VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	GLuint vertexData, indices;
-	glGenBuffers(1, &vertexData);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexData);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_v), cube_v, GL_STATIC_DRAW);
-
-	glGenBuffers(1, &indices);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_e), cube_e, GL_STATIC_DRAW);	
-
-	//Set model shader as current program
-	glUseProgram(programID);
-	*/
-
+	float angle = 0.0f;
 	do
 	{
 		//Clear screen -> this function also clears stencil and depth buffer
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-		//we list and define the pointers to each
-		//attribute (localized by the layout() directive
-		//in the shader).		
 
-		//bind indices and draw elements. Element indices are taken in groups
-		//of 3, to take the triangle; each integer index is used to access
-		//the Attribute Arrays and then build a vertex which will be processed
-		//in vertex shader.
-
-		/*
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (GLvoid*)0);
-		*/
-
+		cube.model = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
 		cube.draw(scene);
+
+		angle += PI / 180.0f;
+		if(angle >= 2*PI) angle = 0.0f;
 
 		//Swap buffer and query events
 		glfwSwapBuffers(window);

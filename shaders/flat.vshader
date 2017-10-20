@@ -12,13 +12,17 @@ struct _model {
 //------------------------------------------
 in vec3 pos;
 
-//uniform _model model;
-//uniform mat4 viewProj;
-//uniform vec3 cam;
+out vec4 vertexColor;
+
+uniform _model model;
+uniform mat4 viewProj;
+uniform vec3 cam;
 
 void main() 
 {
 	//Apply Model-View-Projection matrix to vertice
-	//gl_Position = viewProj * model.model2world * vec4(pos, 1.0);
-	gl_Position = vec4(pos, 1.0f);
+	gl_Position = viewProj * model.model2world * vec4(pos, 1.0);
+
+	//output color
+	vertexColor = model.kA * vec4(model.a,1.0f);
 }

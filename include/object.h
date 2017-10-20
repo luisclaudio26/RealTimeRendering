@@ -19,7 +19,7 @@ class Object
 protected:
 	PhongMaterial material;
 
-	glm::mat4 model; GLint h_model;
+	GLint h_model;
 
 	//although this is redundant (every object will
 	//have the same view-projection matrix stored),
@@ -51,6 +51,8 @@ public:
 	void set_view_projection(const glm::mat4& vp);
 	void set_shader_program(const std::string& path);
 	virtual void load_geometry() = 0;
+
+	glm::mat4 model;
 };
 
 #endif

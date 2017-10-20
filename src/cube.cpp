@@ -2,36 +2,43 @@
 
 void Cube::load_geometry()
 {
-	//Build and bring new vertex array to context
-	glGenVertexArrays(1, &this->h_vertex_array);
-	glBindVertexArray(this->h_vertex_array);
-
 	//hardcoded data for a cube centered on the origin
-	glm::vec3 cube[8];
-	cube[0] = glm::vec3(-0.5f, -0.5f, -0.5f);
-	cube[1] = glm::vec3(-0.5f, -0.5f, +0.5f);
-	cube[2] = glm::vec3(-0.5f, +0.5f, -0.5f);
-	cube[3] = glm::vec3(-0.5f, +0.5f, +0.5f);
-	cube[4] = glm::vec3(+0.5f, -0.5f, -0.5f);
-	cube[5] = glm::vec3(+0.5f, -0.5f, +0.5f);
-	cube[6] = glm::vec3(+0.5f, +0.5f, -0.5f);
-	cube[7] = glm::vec3(+0.5f, +0.5f, +0.5f);
+	glm::vec3 cube_v[8];
+	cube_v[0] = glm::vec3(-0.5f, -0.5f, -0.5f);
+	cube_v[1] = glm::vec3(-0.5f, -0.5f, +0.5f);
+	cube_v[2] = glm::vec3(-0.5f, +0.5f, -0.5f);
+	cube_v[3] = glm::vec3(-0.5f, +0.5f, +0.5f);
+	cube_v[4] = glm::vec3(+0.5f, -0.5f, -0.5f);
+	cube_v[5] = glm::vec3(+0.5f, -0.5f, +0.5f);
+	cube_v[6] = glm::vec3(+0.5f, +0.5f, -0.5f);
+	cube_v[7] = glm::vec3(+0.5f, +0.5f, +0.5f);
 
-	//Load data into buffer
-	GLuint vertex_buffer;
-	glGenBuffers(1, &vertex_buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+	unsigned int cube_e[36] = { 6, 4, 0,
+								0, 2, 6, //Backface
+								1, 5, 7,
+								1, 7, 3, //Frontface
+								3, 7, 6,
+								3, 6, 2, //Top
+								1, 5, 4, 
+								1, 4, 0, //Bottom
+								5, 4, 6,
+								5, 6, 7, //Right
+								0, 1, 3, //Left
+								1, 3, 2 };
 
-	glBufferData(GL_ARRAY_BUFFER,
-				8 * sizeof(glm::vec3),
-				cube,
-				GL_STATIC_DRAW);
+	this->n_indices = 36;
 
-	//with the current vertex array and data buffer loaded, 
-	//load the parameters expected by the shader
-	this->load_glsl_parameters();
+	//Load data into buffers
+	glGenBuffers(1, &this->h_vertex_array);
+	glBindBuffer(GL_ARRAY_BUFFER, this->h_vertex_array);
+	glBufferData(GL_ARRAY_BUFFER, 8*sizeof(glm::vec3), cube_v, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);	
+	glGenBuffers(1, &this->h_indices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->h_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36*sizeof(int), cube_e, GL_STATIC_DRAW);
+
+	//unbind stuff
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);	
 }
 

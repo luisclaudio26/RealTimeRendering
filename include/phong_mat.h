@@ -8,12 +8,12 @@
 class PhongMaterial
 {
 public:
-	typedef struct {
-		float k_a; glm::mat3 a;
-		float k_d; glm::mat3 d;
+	struct {
+		float k_a; glm::vec3 a;
+		float k_d; glm::vec3 d;
 	} param;
 
-	typedef struct {
+	struct {
 		GLint k_a, k_d, a, d;
 	} handler;
 

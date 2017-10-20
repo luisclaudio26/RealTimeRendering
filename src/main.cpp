@@ -6,11 +6,28 @@
 #include <iostream>
 #include <cstring>
 
+#include "../include/cube.h"
+
 GLFWwindow* setup();
 
 int main(int argc, char** args)
 {
 	GLFWwindow* window = setup();
+
+	Scene scene;
+	scene.cam = glm::vec3(0.0f, 0.0f, -5.0f);
+
+	glm::mat4 proj = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.01f, 20.0f);
+	glm::mat4 view = glm::lookAt(scene.cam, //Position 
+								glm::vec3(0.0f, 0.0f, 0.0f), 	//Look direction
+								glm::vec3(0.0f, 1.0f, 0.0f) );	//Up
+
+	glm::mat4 PV = proj*view;
+
+	Cube cube;
+	cube.set_view_projection(PV);
+	cube.set_shader_program("../shaders/flat");
+	cube.load_geometry();
 
 	do
 	{

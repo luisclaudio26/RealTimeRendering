@@ -8,7 +8,8 @@
 class Scene
 {
 private:
-public:	
+public:
+	glm::vec3 cam;
 };
 
 #endif

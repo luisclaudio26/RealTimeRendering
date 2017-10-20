@@ -38,13 +38,13 @@ protected:
 	//use to store the edges 
 	GLuint h_indices; int n_indices;
 
+public:
+	Object();
+	
 	//request OpenGL the IDs (handlers)
 	//for matrices, shader, etc.
 	void request_handlers();
 
-public:
-	Object();
-	
 	void draw(const Scene& scene);
 	void set_view_projection(const glm::mat4& vp);
 	void set_shader_program(const std::string& path);

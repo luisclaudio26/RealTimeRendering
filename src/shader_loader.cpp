@@ -44,7 +44,7 @@ GLuint ShaderLoader::load_shader(const std::string& file, GLenum shaderType)
 	//display any warning messages
 	char buffer[1000];
 	glGetShaderInfoLog(id, 1000, NULL, buffer);
-	std::cout<<"Shader log: "<<buffer<<std::endl;
+	std::cout<<"Shader compilation log: "<<buffer<<std::endl;
 
 	delete[] code;
 

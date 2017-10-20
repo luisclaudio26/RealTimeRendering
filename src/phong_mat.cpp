@@ -11,7 +11,7 @@ static inline void load_vec3_uniform(GLuint handler, const glm::vec3& v) {
 PhongMaterial::PhongMaterial()
 {
 	this->param.a = this->param.d = glm::vec3(1.0f, 1.0f, 1.0f);
-	this->param.k_a = this->param.k_d = 0.0f;
+	this->param.k_a = this->param.k_d = 1.0f;
 	this->handler.k_a = this->handler.k_d = this->handler.a = this->handler.d = 0;
 }
 

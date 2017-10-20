@@ -18,8 +18,6 @@ Object::Object()
 	this->h_program = this->h_vertex_array = 0;
 	this->h_model = this->h_vp = 0;
 	this->model = this->viewProj = glm::mat4(1.0f);
-
-	request_handlers();
 }
 
 void Object::set_view_projection(const glm::mat4& vp)
@@ -44,7 +42,7 @@ void Object::request_handlers()
 }
 
 void Object::draw(const Scene& scene)
-{
+{	
 	//Set model shader as current program
 	glUseProgram(this->h_program);
 
@@ -57,9 +55,7 @@ void Object::draw(const Scene& scene)
 
 	//camera position
 	GLint h_cam = glGetUniformLocation(this->h_program, "cam");
-	glUniform3f(h_cam, scene.cam[0],
-						scene.cam[1],
-						scene.cam[2]);
+	glUniform3f(h_cam, scene.cam[0], scene.cam[1], scene.cam[2]);
 
 	//we list and define the pointers to each
 	//attribute (localized by the layout() directive
@@ -74,7 +70,8 @@ void Object::draw(const Scene& scene)
 	//in vertex shader.
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->h_indices);
 	glDrawElements(GL_TRIANGLES, this->n_indices, GL_UNSIGNED_INT, (GLvoid*)0);
-	
+
 	//unload stuff
+	glDisableVertexAttribArray(0);
 	glUseProgram(0);
 }

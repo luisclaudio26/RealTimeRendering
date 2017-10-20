@@ -11,6 +11,7 @@ struct _model {
 
 //------------------------------------------
 in vec3 pos;
+in vec3 normal;
 
 out vec4 vertexColor;
 
@@ -24,5 +25,5 @@ void main()
 	gl_Position = viewProj * model.model2world * vec4(pos, 1.0);
 
 	//output color
-	vertexColor = model.kA * vec4(model.a,1.0f);
+	vertexColor = model.kA * vec4(model.a, 1.0f);
 }

@@ -53,13 +53,25 @@ void Cube::load_geometry()
 
 	this->n_indices = 3;
 
-	//Load data into buffers
-	glGenBuffers(1, &this->h_vertex_array);
-	glBindBuffer(GL_ARRAY_BUFFER, this->h_vertex_array);
-	glBufferData(GL_ARRAY_BUFFER, 9*sizeof(float), &cube_v[0], GL_STATIC_DRAW);
-
+	//create buffers
+	glGenBuffers(1, &this->h_data);
 	glGenBuffers(1, &this->h_indices);
+
+	//download data into buffers
+	glBindVertexArray(this->h_VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, this->h_data);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_v), cube_v, GL_STATIC_DRAW);
+
+	GLuint id_pos = glGetAttribLocation(this->h_program, "pos");
+	glEnableVertexAttribArray(id_pos);
+	glVertexAttribPointer(id_pos, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+
+	//build vertex indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->h_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3*sizeof(unsigned int), &cube_e[0], GL_STATIC_DRAW);	
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_e), cube_e, GL_STATIC_DRAW);
+
+	//unbind VAO
+	glBindVertexArray(0);
 }
 

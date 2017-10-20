@@ -15,9 +15,11 @@ static void load_vec3_uniform(GLuint handler, const glm::vec3& v) {
 //--------------------------------------------------------
 Object::Object()
 {
-	this->h_program = this->h_vertex_array = 0;
+	this->h_program = this->h_data = 0;
 	this->h_model = this->h_vp = 0;
 	this->model = this->viewProj = glm::mat4(1.0f);
+
+	glGenVertexArrays(1, &this->h_VAO);
 }
 
 void Object::set_view_projection(const glm::mat4& vp)
@@ -57,21 +59,14 @@ void Object::draw(const Scene& scene)
 	GLint h_cam = glGetUniformLocation(this->h_program, "cam");
 	glUniform3f(h_cam, scene.cam[0], scene.cam[1], scene.cam[2]);
 
-	//we list and define the pointers to each
-	//attribute (localized by the layout() directive
-	//in the shader).
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, this->h_vertex_array);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0); //vec3 is made of 3 floats
-
-	//bind indices and draw elements. Element indices are taken in groups
+	//bind VAO and draw elements. Element indices are taken in groups
 	//of 3, to take the triangle; each integer index is used to access
 	//the Attribute Arrays and then build a vertex which will be processed
 	//in vertex shader.
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->h_indices);
+	glBindVertexArray(this->h_VAO);
 	glDrawElements(GL_TRIANGLES, this->n_indices, GL_UNSIGNED_INT, (GLvoid*)0);
+	glBindVertexArray(0);
 
 	//unload stuff
-	glDisableVertexAttribArray(0);
 	glUseProgram(0);
 }

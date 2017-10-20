@@ -27,15 +27,14 @@ int main(int argc, char** args)
 	glm::mat4 PV = proj*view;
 
 
-
-	/*
+	
 	Cube cube;
 	cube.set_view_projection(PV);
 	cube.set_shader_program("../shaders/flat");
 	cube.request_handlers();
 	cube.load_geometry();
-	*/
 	
+	/*
 	GLenum err;
 
 	GLuint programID = ShaderLoader::load("../shaders/flat");
@@ -60,24 +59,9 @@ int main(int argc, char** args)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_e), cube_e, GL_STATIC_DRAW);	
 
-	GLuint id_pos = glGetAttribLocation(programID, "pos");
-	glEnableVertexAttribArray(id_pos);
-	
-	err = glGetError();
-	std::cout<<"ERROR1 "<<err<<std::endl;
-
-	glBindBuffer(GL_ARRAY_BUFFER, VAO);
-
-	err = glGetError();
-	std::cout<<"ERROR2 "<<err<<std::endl;
-
-	glVertexAttribPointer(id_pos, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0); //vec3 is made of 3 floats
-
-	err = glGetError();
-	std::cout<<"ERROR3 "<<err<<std::endl;
-
 	//Set model shader as current program
 	glUseProgram(programID);
+	*/
 
 	do
 	{
@@ -92,8 +76,13 @@ int main(int argc, char** args)
 		//of 3, to take the triangle; each integer index is used to access
 		//the Attribute Arrays and then build a vertex which will be processed
 		//in vertex shader.
+
+		/*
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (GLvoid*)0);
+		*/
+
+		cube.draw(scene);
 
 		//Swap buffer and query events
 		glfwSwapBuffers(window);

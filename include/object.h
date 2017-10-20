@@ -30,9 +30,11 @@ protected:
 	//Handler to the shader program used to render this
 	GLuint h_program;
 
-	//Handler to the array storing
-	//the vertex data of this object
-	GLuint h_vertex_array;
+	//Handler to the geometry data
+	GLuint h_data;
+
+	//Handler to the vertex array object
+	GLuint h_VAO;
 
 	//handler to array of indices which we'll
 	//use to store the edges 

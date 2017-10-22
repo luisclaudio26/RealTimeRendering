@@ -19,7 +19,7 @@ int main(int argc, char** args)
 	glGetError(); //clean glewInit() error
 
 	Scene scene;
-	scene.cam = glm::vec3(0.0f, 0.0f, -5.0f);
+	scene.cam = glm::vec3(3.0f, 3.0f, 5.0f);
 
 	glm::mat4 proj = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.01f, 20.0f);
 	glm::mat4 view = glm::lookAt(scene.cam, //Position 
@@ -32,7 +32,6 @@ int main(int argc, char** args)
 	cube.set_view_projection(PV);
 	cube.set_shader_program("../shaders/flat");
 	cube.load_geometry();
-
 
 	float angle = 0.0f;
 	do

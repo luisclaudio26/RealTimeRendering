@@ -22,8 +22,15 @@ uniform vec3 cam;
 void main() 
 {
 	//Apply Model-View-Projection matrix to vertice
-	gl_Position = viewProj * model.model2world * vec4(pos, 1.0);
+	vec4 final_pos = viewProj * model.model2world * vec4(pos, 1.0);
+	vec4 final_normal = viewProj * model.model2world * vec4(normal, 0.0);
+	gl_Position = final_pos;
+
+	//compute color using directional light
+	vec4 light_d = vec4(0, 0, 1, 0);
+	float d = dot(light_d, normalize(final_normal));
 
 	//output color
-	vertexColor = model.kA * vec4(model.a, 1.0f);
+	vertexColor = vec4(model.kA * model.a
+						+ d * model.kD * model.d, 1.0f);
 }

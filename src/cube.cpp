@@ -73,11 +73,11 @@ void Cube::load_geometry()
 
 	GLuint id_pos = glGetAttribLocation(this->h_program, "pos");
 	glEnableVertexAttribArray(id_pos);
-	glVertexAttribPointer(id_pos, 3, GL_FLOAT, GL_FALSE, 3, (GLvoid*)0);
+	glVertexAttribPointer(id_pos, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)0);
 
 	GLuint id_normal = glGetAttribLocation(this->h_program, "normal");
 	glEnableVertexAttribArray(id_normal);
-	glVertexAttribPointer(id_normal, 3, GL_FLOAT, GL_FALSE, 3, (GLvoid*)3);
+	glVertexAttribPointer(id_normal, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)sizeof(glm::vec3));
 
 	//build vertex indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->h_indices);

@@ -53,7 +53,7 @@ void Object::draw(const Scene& scene)
 
 	//Load matrices
 	glUniformMatrix4fv(this->h_model, 1, GL_FALSE, &this->model[0][0]);
-	glUniformMatrix4fv(this->h_vp, 1, GL_FALSE, &this->viewProj[0][0]);
+	glUniformMatrix4fv(this->h_vp, 1, GL_FALSE, &scene.viewProj[0][0]);
 
 	//material settings
 	this->material.download_as_uniform();

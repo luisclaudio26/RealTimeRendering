@@ -18,33 +18,41 @@ int main(int argc, char** args)
 	GLFWwindow* window = setup();
 	glGetError(); //clean glewInit() error
 
+	//scene setup
 	Scene scene;
+	glm::mat4 proj = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.01f, 20.0f);
 	scene.cam = glm::vec3(3.0f, 3.0f, 5.0f);
 
-	glm::mat4 proj = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.01f, 20.0f);
-	glm::mat4 view = glm::lookAt(scene.cam, //Position 
-								glm::vec3(0.0f, 0.0f, 0.0f), 	//Look at
-								glm::vec3(0.0f, 1.0f, 0.0f) );	//Up
-
-	glm::mat4 PV = proj*view;
-
+	//geometry setup
 	Cube cube;
-	cube.set_view_projection(PV);
 	cube.set_shader_program("../shaders/flat");
 	cube.load_geometry();
 
-	float angle = 0.0f;
+	Cube floor;
+	floor.set_shader_program("../shaders/flat");
+	floor.load_geometry();
+	floor.model = glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 0.01f, 10.0f));
+
 	do
 	{
 		//Clear screen -> this function also clears stencil and depth buffer
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+		//manage keyboard input
+		if( glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS )
+			scene.cam.x -= 0.15f;
+		if( glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS )
+			scene.cam.x += 0.15f;
 
-		cube.model = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
+		//set scene properties
+		glm::mat4 view = glm::lookAt(scene.cam, //Position 
+								glm::vec3(0.0f, 0.0f, 0.0f), 	//Look at
+								glm::vec3(0.0f, 1.0f, 0.0f) );	//Up
+		scene.viewProj = proj * view;
+
+		//draw objects
 		cube.draw(scene);
-
-		angle += PI / 180.0f;
-		if(angle >= 2*PI) angle = 0.0f;
+		floor.draw(scene);
 
 		//Swap buffer and query events
 		glfwSwapBuffers(window);

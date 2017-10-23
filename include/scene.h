@@ -10,6 +10,7 @@ class Scene
 private:
 public:
 	glm::vec3 cam;
+	glm::mat4 viewProj;
 };
 
 #endif

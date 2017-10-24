@@ -17,14 +17,9 @@ Object::Object()
 {
 	this->h_program = this->h_data = 0;
 	this->h_model = this->h_vp = 0;
-	this->model = this->viewProj = glm::mat4(1.0f);
+	this->model = glm::mat4(1.0f);
 
 	glGenVertexArrays(1, &this->h_VAO);
-}
-
-void Object::set_view_projection(const glm::mat4& vp)
-{
-	this->viewProj = vp;
 }
 
 void Object::set_shader_program(const std::string& path)
@@ -48,6 +43,9 @@ void Object::request_handlers()
 
 void Object::draw(const Scene& scene)
 {	
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, 800, 600);
+
 	//Set model shader as current program
 	glUseProgram(this->h_program);
 
@@ -71,5 +69,34 @@ void Object::draw(const Scene& scene)
 	glBindVertexArray(0);
 
 	//unload stuff
+	glUseProgram(0);
+}
+
+void Object::drawToTex(const Scene& scene, GLuint framebuffer)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	glViewport(0, 0, 800, 600);
+
+	glUseProgram(this->h_program);
+
+	//Load matrices
+	glUniformMatrix4fv(this->h_model, 1, GL_FALSE, &this->model[0][0]);
+	glUniformMatrix4fv(this->h_vp, 1, GL_FALSE, &scene.viewProj[0][0]);
+
+	//material settings
+	this->material.download_as_uniform();
+
+	//camera position
+	GLint h_cam = glGetUniformLocation(this->h_program, "cam");
+	glUniform3f(h_cam, scene.cam[0], scene.cam[1], scene.cam[2]);
+
+	//bind VAO and draw elements. Element indices are taken in groups
+	//of 3, to take the triangle; each integer index is used to access
+	//the Attribute Arrays and then build a vertex which will be processed
+	//in vertex shader.
+	glBindVertexArray(this->h_VAO);
+	glDrawElements(GL_TRIANGLES, this->n_indices, GL_UNSIGNED_INT, (GLvoid*)0);
+	glBindVertexArray(0);
+
 	glUseProgram(0);
 }

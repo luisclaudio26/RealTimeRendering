@@ -17,15 +17,14 @@
 class Object
 {
 protected:
-	PhongMaterial material;
-
+	//handler for model to world matrix
 	GLint h_model;
 
 	//although this is redundant (every object will
 	//have the same view-projection matrix stored),
 	//it will be useful when doing render-to-texture
 	//operations after.
-	glm::mat4 viewProj; GLint h_vp;
+	GLint h_vp;
 
 	//Handler to the shader program used to render this
 	GLuint h_program;
@@ -41,6 +40,8 @@ protected:
 	GLuint h_indices; int n_indices;
 
 public:
+	PhongMaterial material;
+
 	Object();
 	
 	//request OpenGL the IDs (handlers)
@@ -48,7 +49,7 @@ public:
 	void request_handlers();
 
 	void draw(const Scene& scene);
-	void set_view_projection(const glm::mat4& vp);
+	void drawToTex(const Scene& scene, GLuint framebuffer);
 	void set_shader_program(const std::string& path);
 	virtual void load_geometry() = 0;
 

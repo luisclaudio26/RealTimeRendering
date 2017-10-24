@@ -9,6 +9,10 @@ struct _model {
 	float kA; vec3 a;
 };
 
+struct _pointLight {
+	vec3 o, d;
+};
+
 //------------------------------------------
 in vec3 pos;
 in vec3 normal;

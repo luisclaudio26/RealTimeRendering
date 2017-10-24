@@ -39,6 +39,8 @@ protected:
 	//use to store the edges 
 	GLuint h_indices; int n_indices;
 
+	virtual void load_uniforms();
+
 public:
 	PhongMaterial material;
 

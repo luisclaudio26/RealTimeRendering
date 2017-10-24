@@ -41,6 +41,11 @@ void Object::request_handlers()
 	this->material.request_handlers(this->h_program);
 }
 
+void Object::load_uniforms()
+{
+	return;
+}
+
 void Object::draw(const Scene& scene)
 {	
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -59,6 +64,8 @@ void Object::draw(const Scene& scene)
 	//camera position
 	GLint h_cam = glGetUniformLocation(this->h_program, "cam");
 	glUniform3f(h_cam, scene.cam[0], scene.cam[1], scene.cam[2]);
+
+	this->load_uniforms();
 
 	//bind VAO and draw elements. Element indices are taken in groups
 	//of 3, to take the triangle; each integer index is used to access
@@ -85,6 +92,8 @@ void Object::drawToTex(const Scene& scene, GLuint framebuffer)
 
 	//material settings
 	this->material.download_as_uniform();
+
+	this->load_uniforms();
 
 	//camera position
 	GLint h_cam = glGetUniformLocation(this->h_program, "cam");

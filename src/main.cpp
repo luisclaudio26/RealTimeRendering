@@ -8,12 +8,13 @@
 
 #include "../include/shader_loader.h"
 #include "../include/cube.h"
+#include "../include/plane.h"
 
 #define PI 3.14159265359
 #define OGL_OK { \
 					GLenum err; \
 					if((err = glGetError()) != GL_NO_ERROR) \
-						std::cout<<"Error: "<<err<<std::endl; \
+						std::cout<<"Error at "<<__FILE__<<", line "<<__LINE__<<": "<<err<<std::endl; \
 				}
 
 
@@ -31,13 +32,13 @@ int main(int argc, char** args)
 
 	//geometry setup
 	Cube cube;
-	cube.set_shader_program("../shaders/flat");
+	cube.set_shader_program("../shaders/flat"); OGL_OK
 	cube.load_geometry();
 	cube.material.param.a = cube.material.param.d = glm::vec3(0.8f, 0.2f, 0.2f);
 	cube.model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-	Cube floor;
-	floor.set_shader_program("../shaders/flat");
+	Plane floor;
+	floor.set_shader_program("../shaders/passThrough"); OGL_OK
 	floor.load_geometry();
 	floor.model = glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 0.01f, 10.0f));
 

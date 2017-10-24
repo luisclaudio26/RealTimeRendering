@@ -15,6 +15,10 @@ struct _pointLight {
 
 //------------------------------------------
 in vec3 pos;
+in vec3 normal;
+in vec2 uv;
+
+out vec2 uv_frag;
 
 uniform _model model;
 uniform mat4 viewProj;

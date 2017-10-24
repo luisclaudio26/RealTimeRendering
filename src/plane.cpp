@@ -1,6 +1,12 @@
 #include "../include/plane.h"
 #include <iostream>
 
+#define OGL_OK { \
+					GLenum err; \
+					if((err = glGetError()) != GL_NO_ERROR) \
+						std::cout<<"Error at "<<__FILE__<<", line "<<__LINE__<<": "<<err<<std::endl; \
+				}
+
 void Plane::load_geometry()
 {
 	typedef struct {
@@ -19,26 +25,28 @@ void Plane::load_geometry()
 	this->n_indices = 6;
 
 	//create buffers
-	glGenBuffers(1, &this->h_data);
-	glGenBuffers(1, &this->h_indices);
+	glGenBuffers(1, &this->h_data); OGL_OK
+	glGenBuffers(1, &this->h_indices); OGL_OK
 
 	//download data into buffers
-	glBindVertexArray(this->h_VAO);
+	glBindVertexArray(this->h_VAO); OGL_OK
 
-	glBindBuffer(GL_ARRAY_BUFFER, this->h_data);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(p_v), p_v, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, this->h_data); OGL_OK
+	glBufferData(GL_ARRAY_BUFFER, sizeof(p_v), p_v, GL_STATIC_DRAW); OGL_OK
 
-	GLuint id_pos = glGetAttribLocation(this->h_program, "pos");
-	glEnableVertexAttribArray(id_pos);
-	glVertexAttribPointer(id_pos, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)0);
+	
+	GLuint id_pos = glGetAttribLocation(this->h_program, "pos"); OGL_OK
+	glEnableVertexAttribArray(id_pos); OGL_OK
+	glVertexAttribPointer(id_pos, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)0); OGL_OK
 
-	GLuint id_normal = glGetAttribLocation(this->h_program, "normal");
-	glEnableVertexAttribArray(id_normal);
-	glVertexAttribPointer(id_normal, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)sizeof(glm::vec3));
+	GLuint id_uv = glGetAttribLocation(this->h_program, "uv"); OGL_OK
+	glEnableVertexAttribArray(id_uv); OGL_OK
+	glVertexAttribPointer(id_uv, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)(2*sizeof(glm::vec3))); OGL_OK
 
-	GLuint id_uv = glGetAttribLocation(this->h_program, "uv");
-	glEnableVertexAttribArray(id_uv);
-	glVertexAttribPointer(id_uv, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)(2*sizeof(glm::vec3)));
+	GLuint id_normal = glGetAttribLocation(this->h_program, "normal"); OGL_OK
+	glEnableVertexAttribArray(id_normal); OGL_OK
+	glVertexAttribPointer(id_normal, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)sizeof(glm::vec3)); OGL_OK
+
 
 	//build vertex indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->h_indices);

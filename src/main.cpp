@@ -6,16 +6,16 @@
 #include <iostream>
 #include <cstring>
 
-#include "../include/shader_loader.h"
-#include "../include/cube.h"
-#include "../include/plane.h"
-
 #define PI 3.14159265359
 #define OGL_OK { \
 					GLenum err; \
 					if((err = glGetError()) != GL_NO_ERROR) \
 						std::cout<<"Error at "<<__FILE__<<", line "<<__LINE__<<": "<<err<<std::endl; \
 				}
+
+#include "../include/shader_loader.h"
+#include "../include/cube.h"
+#include "../include/plane.h"
 
 
 GLFWwindow* setup();
@@ -39,7 +39,7 @@ int main(int argc, char** args)
 
 	Plane floor;
 	floor.set_shader_program("../shaders/passThrough"); OGL_OK
-	floor.load_geometry();
+	floor.load_geometry(); OGL_OK
 	floor.model = glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 0.01f, 10.0f));
 
 	//------ Render to texture -------
@@ -98,6 +98,8 @@ int main(int argc, char** args)
 		std::cout<<"Error while creating framebuffer!!!\n";
 
 	//--------------------------------
+
+	floor.tex = h_renderTarget;
 
 	do
 	{

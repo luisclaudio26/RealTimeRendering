@@ -19,6 +19,7 @@ in vec3 normal;
 in vec2 uv;
 
 out vec2 uv_frag;
+out vec3 normal_frag;
 
 uniform _model model;
 uniform mat4 viewProj;
@@ -28,4 +29,11 @@ void main()
 {	
 	//Vertex position in clip space
 	gl_Position = viewProj * model.model2world * vec4(pos, 1.0);
+
+	//works only if model2world does not scale!
+	vec3 normal_worldspace = (viewProj * model.model2world * vec4(normal, 0.0f)).xyz;
+	normal_frag = normal;
+
+	//pass uv texture coordinates
+	uv_frag = uv;
 }

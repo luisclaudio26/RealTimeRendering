@@ -31,8 +31,8 @@ void main()
 	gl_Position = final_pos;
 
 	//compute color using directional light
-	vec4 light_d = vec4(0, 0, 1, 0);
-	float d = dot(light_d, normalize(final_normal));
+	vec3 light_d = vec3(0.0f, 0.0f, 1.0f);
+	float d = dot(light_d, normalize(normal));
 
 	//output color
 	vertexColor = vec4(model.kA * model.a

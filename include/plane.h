@@ -6,9 +6,8 @@
 class Plane : public Object
 {
 public:
-	GLuint tex;
+	Plane(ShaderType t) : Object(t) {}
 	void load_geometry() override;
-	void load_uniforms() override;
 };
 
 #endif

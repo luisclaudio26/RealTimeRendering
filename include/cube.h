@@ -6,12 +6,8 @@
 class Cube : public Object
 {
 public:
+	Cube(ShaderType t) : Object(t) {}
 	void load_geometry() override;
 };
 
 #endif
-
-
-/*
-	GLuint id_pos = glGetAttribLocation(this->shader_id, "pos");
-*/

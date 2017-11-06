@@ -8,19 +8,10 @@
 class PhongMaterial
 {
 public:
-	struct {
-		float k_a; glm::vec3 a;
-		float k_d; glm::vec3 d;
-	} param;
-
-	struct {
-		GLint k_a, k_d, a, d;
-	} handler;
+	float k_a; glm::vec3 a;
+	float k_d; glm::vec3 d;
 
 	PhongMaterial();
-
-	void request_handlers(GLuint program);
-	void download_as_uniform();
 };
 
 #endif

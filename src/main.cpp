@@ -13,10 +13,7 @@
 						std::cout<<"Error at "<<__FILE__<<", line "<<__LINE__<<": "<<err<<std::endl; \
 				}
 
-#include "../include/shader_loader.h"
 #include "../include/cube.h"
-#include "../include/plane.h"
-
 
 GLFWwindow* setup();
 
@@ -31,16 +28,7 @@ int main(int argc, char** args)
 	scene.cam = glm::vec3(3.0f, 3.0f, 5.0f);
 
 	//geometry setup
-	Cube cube;
-	cube.set_shader_program("../shaders/flat"); OGL_OK
-	cube.load_geometry();
-	cube.material.param.a = cube.material.param.d = glm::vec3(0.8f, 0.2f, 0.2f);
-	cube.model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-	Plane floor;
-	floor.set_shader_program("../shaders/passThrough"); OGL_OK
-	floor.load_geometry(); OGL_OK
-	floor.model = glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 0.01f, 10.0f));
+	Cube cube(BLINNPHONG); cube.prepare();
 
 	//------ Render to texture -------
 	//Create a framebuffer. A framebuffer holds
@@ -99,7 +87,7 @@ int main(int argc, char** args)
 
 	//--------------------------------
 
-	floor.tex = h_renderTarget;
+	//floor.tex = h_renderTarget;
 
 	do
 	{
@@ -119,8 +107,7 @@ int main(int argc, char** args)
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 		//draw objects
-		cube.drawToTex(scene, h_framebuffer);
-		floor.draw(scene);	
+		cube.draw(scene);	
 
 		//Swap buffer and query events
 		glfwSwapBuffers(window);

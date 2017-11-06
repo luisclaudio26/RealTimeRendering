@@ -13,49 +13,25 @@
 
 #include "phong_mat.h"
 #include "scene.h"
+#include "shaders/shader.h"
 
 class Object
 {
 protected:
-	//handler for model to world matrix
-	GLint h_model;
-
-	//although this is redundant (every object will
-	//have the same view-projection matrix stored),
-	//it will be useful when doing render-to-texture
-	//operations after.
-	GLint h_vp;
-
-	//Handler to the shader program used to render this
-	GLuint h_program;
-
-	//Handler to the geometry data
-	GLuint h_data;
-
-	//Handler to the vertex array object
-	GLuint h_VAO;
-
-	//handler to array of indices which we'll
-	//use to store the edges 
-	GLuint h_indices; int n_indices;
-
-	virtual void load_uniforms();
-
-public:
-	PhongMaterial material;
-
-	Object();
-	
-	//request OpenGL the IDs (handlers)
-	//for matrices, shader, etc.
-	void request_handlers();
-
-	void draw(const Scene& scene);
-	void drawToTex(const Scene& scene, GLuint framebuffer);
-	void set_shader_program(const std::string& path);
-	virtual void load_geometry() = 0;
+	Shader s;
+	PhongMaterial m;
 
 	glm::mat4 model;
+
+	Vertex* vertices; int n_vertices;
+	unsigned int* edges; int n_edges;
+
+	virtual void load_geometry() = 0;
+public:
+	Object(ShaderType t);
+
+	void draw(const Scene& scene, GLuint framebuffer = 0);
+	void prepare();	
 };
 
 #endif

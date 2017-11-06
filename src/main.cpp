@@ -14,6 +14,7 @@
 				}
 
 #include "../include/cube.h"
+#include "../include/plane.h"
 
 GLFWwindow* setup();
 
@@ -28,7 +29,8 @@ int main(int argc, char** args)
 	scene.cam = glm::vec3(3.0f, 3.0f, 5.0f);
 
 	//geometry setup
-	Cube cube(BLINNPHONG); cube.prepare();
+	//Cube cube(BLINNPHONG); cube.prepare();
+	Plane plane(BLINNPHONG); plane.prepare();
 
 	//------ Render to texture -------
 	//Create a framebuffer. A framebuffer holds
@@ -107,7 +109,7 @@ int main(int argc, char** args)
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 		//draw objects
-		cube.draw(scene);	
+		plane.draw(scene);	
 
 		//Swap buffer and query events
 		glfwSwapBuffers(window);

@@ -103,14 +103,13 @@ void Shader::upload_data(const Vertex* vertices, int n_vertices,
 	//drop handlers before generating these
 
 	//create buffers
-	glGenBuffers(1, &this->h_data); OGL_OK
-	glGenBuffers(1, &this->h_indices); OGL_OK
-
+	
 	//download data into buffers
 	glBindVertexArray(this->h_VAO); OGL_OK
+
+	glGenBuffers(1, &this->h_data); OGL_OK
 	glBindBuffer(GL_ARRAY_BUFFER, this->h_data); OGL_OK
-	
-	glBufferData(GL_ARRAY_BUFFER, n_vertices, vertices, GL_STATIC_DRAW); OGL_OK
+	glBufferData(GL_ARRAY_BUFFER, n_vertices * sizeof(Vertex), vertices, GL_STATIC_DRAW); OGL_OK
 
 	//define location for each vertex attribute
 	GLuint id_pos = glGetAttribLocation(this->h_program, "pos"); OGL_OK
@@ -126,8 +125,9 @@ void Shader::upload_data(const Vertex* vertices, int n_vertices,
 	glVertexAttribPointer(id_uv, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(2*sizeof(glm::vec3))); OGL_OK
 
 	//build vertex indices
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->h_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, n_edges, edges, GL_STATIC_DRAW);
+	glGenBuffers(1, &this->h_indices); OGL_OK
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->h_indices); OGL_OK
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, n_edges * sizeof(unsigned int), edges, GL_STATIC_DRAW); OGL_OK
 
 	//unbind VAO
 	glBindVertexArray(0);

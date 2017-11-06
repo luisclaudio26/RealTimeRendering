@@ -6,5 +6,6 @@
 PhongMaterial::PhongMaterial()
 {
 	this->a = this->d = glm::vec3(0.0f, 1.0f, 0.0f);
-	this->k_a = this->k_d = 1.0f;
+	this->k_a = 0.3f;
+	this->k_d = 1.0f;
 }

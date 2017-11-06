@@ -1,9 +1,9 @@
 #include "../../include/shaders/shader_data.h"
 #include <iostream>
 
-uniform_loader_func uniform_loaders[] = { load_blinnphong_uniforms };
+uniform_loader_func uniform_loaders[] = { load_blinnphong_uniforms, 
+											load_texturerenderer_uniforms };
 
-//TODO: move this to .cpp
 void load_blinnphong_uniforms(const ShaderData& data, const ShaderHandler& handler)
 {
 	//Load matrices
@@ -27,4 +27,20 @@ void load_blinnphong_uniforms(const ShaderData& data, const ShaderHandler& handl
 	glUniform3f(handler.BlinnPhong.material.a, data.BlinnPhong.material.a[0], 
 												data.BlinnPhong.material.a[1],
 												data.BlinnPhong.material.a[2]);
+}
+
+void load_texturerenderer_uniforms(const ShaderData& data, const ShaderHandler& handler)
+{
+	glUniformMatrix4fv(handler.TextureRenderer.vp, 1, GL_FALSE, &data.TextureRenderer.vp[0][0]);
+	glUniformMatrix4fv(handler.TextureRenderer.model, 1, GL_FALSE, &data.TextureRenderer.model[0][0]);
+
+	glUniform3f(handler.TextureRenderer.cam, data.TextureRenderer.cam[0], 
+										data.TextureRenderer.cam[1], 
+										data.TextureRenderer.cam[2]);
+
+	//put the desired texture in slot 0,
+	//then upload slot zero into shader uniform
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, data.TextureRenderer.tex);
+	glUniform1i(handler.TextureRenderer.tex, 0);
 }

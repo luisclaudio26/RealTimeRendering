@@ -1,6 +1,12 @@
 #include "../../include/shaders/shader.h"
 #include <iostream>
 
+#define OGL_OK { \
+					GLenum err; \
+					if((err = glGetError()) != GL_NO_ERROR) \
+						std::cout<<"Error at "<<__FILE__<<", line "<<__LINE__<<": "<<err<<std::endl; \
+				}
+
 //--------------------------------------------------------
 //------------------ FROM SHADER.H -----------------------
 //--------------------------------------------------------
@@ -90,6 +96,9 @@ void Shader::select_shader(ShaderType t)
 		this->t = t;
 		this->h_program = get_shader_program("../shaders/flat");
 		break;
+	case TEXTURERENDERER:
+		this->t = t;
+		this->h_program = get_shader_program("../shaders/textureRenderer");
 	}
 
 	//get handlers for this shader

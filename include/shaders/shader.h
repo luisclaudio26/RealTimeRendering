@@ -9,15 +9,10 @@
 #include "shader_data.h"
 #include "shader_handler.h"
 
-#define OGL_OK { \
-					GLenum err; \
-					if((err = glGetError()) != GL_NO_ERROR) \
-						std::cout<<"Error at "<<__FILE__<<", line "<<__LINE__<<": "<<err<<std::endl; \
-				}
-
 enum ShaderType
 {
-	BLINNPHONG = 0
+	BLINNPHONG = 0,
+	TEXTURERENDERER = 1,
 };
 
 class Shader

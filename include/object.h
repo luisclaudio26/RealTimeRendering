@@ -28,6 +28,8 @@ protected:
 
 	virtual void load_geometry() = 0;
 public:
+	GLuint myTex;
+
 	Object(ShaderType t);
 
 	void draw(const Scene& scene, GLuint framebuffer = 0);

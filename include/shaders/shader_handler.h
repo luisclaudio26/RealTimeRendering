@@ -15,11 +15,16 @@ typedef union
 		} material;
 	} BlinnPhong;
 
+	struct {
+		GLuint vp, cam, tex, model;
+	} TextureRenderer;
+
 } ShaderHandler;
 
 typedef void (*location_loader_func)(GLuint, ShaderHandler&);
 
 void get_location_blinnphong(GLuint program, ShaderHandler& handlers);
-extern location_loader_func location_loaders[1];
+void get_location_texturerenderer(GLuint program, ShaderHandler& handlers);
+extern location_loader_func location_loaders[2];
 
 #endif

@@ -49,16 +49,7 @@ void PhongMaterial::load_ppm_texture(const char* path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); OGL_OK
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); OGL_OK
 
-	srand(time(NULL));
-	GLubyte data[3*128*128];
-	for(int i = 0; i < 3*128*128; ++i)
-	{
-		data[i] = rand() % 256;
-		//std::cout<<(int)data[i]<<" ";
-	}
-
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bmp.width, bmp.height, 0, GL_RGB, GL_UNSIGNED_BYTE, bmp.rgb_data);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 128, 128, 0, GL_RGB, GL_UNSIGNED_BYTE, data); OGL_OK
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bmp.width, bmp.height, 0, GL_RGB, GL_UNSIGNED_BYTE, bmp.rgb_data);
 
 	bmpread_free(&bmp);
 }

@@ -40,5 +40,6 @@ CTestTestfile.cmake
 *.out
 *.app
 physics
+data/
 
 # Datasets

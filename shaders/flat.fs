@@ -13,5 +13,5 @@ void main()
 	//set material so that vertex color will
 	//be zero, and vice-versa
 	vec4 texel = texture2D(tex, frag_uv);
-	gl_FragColor = texel;
+	gl_FragColor = vertexColor + texel;
 }

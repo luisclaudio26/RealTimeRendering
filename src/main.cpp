@@ -36,6 +36,7 @@ int main(int argc, char** args)
 	Plane plane(BLINNPHONG); plane.prepare();
 	plane.model = glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 10.0f, 10.0f));
 	plane.m.load_ppm_texture("../data/bricks.bmp");
+	plane.m.k_a = 0.0f;
 
 	do
 	{

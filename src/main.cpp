@@ -22,7 +22,7 @@ int main(int argc, char** args)
 	glm::mat4 proj = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.01f, 20.0f);
 	scene.cam = glm::vec3(3.0f, 3.0f, 5.0f);
 
-	scene.lights.push_back( PointLight() );
+	scene.lights.push_back( DirectionalLight() );
 
 	//geometry setup
 	Plane plane(BLINNPHONG); plane.prepare();
@@ -53,7 +53,7 @@ int main(int argc, char** args)
 
 		for(auto l = scene.lights.begin(); l != scene.lights.end(); ++l)
 		{
-			l->pos = glm::rotate(glm::mat4(1.0f), 0.05f, glm::vec3(0.0f, 1.0f, 0.0f)) * (l->pos);
+			l->dir = glm::rotate(glm::mat4(1.0f), 0.05f, glm::vec3(0.0f, 1.0f, 0.0f)) * (l->dir);
 			l->color = glm::rotate(glm::mat4(1.0f), 0.01f, glm::vec3(0.33333f, 0.33333f, 0.33333f)) * l->color;
 		}
 

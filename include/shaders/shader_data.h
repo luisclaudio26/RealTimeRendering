@@ -25,7 +25,7 @@ typedef union ShaderData
 		} material;
 
 		struct {
-			glm::vec3 pos, color;
+			glm::vec3 dir, color;
 		} light;
 	} BlinnPhong;
 

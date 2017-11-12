@@ -17,7 +17,7 @@ typedef union
 		} material;
 
 		struct {
-			GLuint pos, color;
+			GLuint dir, color;
 		} light;
 	} BlinnPhong;
 

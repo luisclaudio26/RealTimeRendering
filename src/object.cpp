@@ -15,9 +15,9 @@ void Object::prepare_blinnphong(const Scene& scene, ShaderData& data)
 											scene.lights[0].color[1],
 											scene.lights[0].color[2]);
 	
-	data.BlinnPhong.light.pos = glm::vec3(scene.lights[0].pos[0], 
-											scene.lights[0].pos[1], 
-											scene.lights[0].pos[2]);
+	data.BlinnPhong.light.dir = glm::vec3(scene.lights[0].dir[0], 
+											scene.lights[0].dir[1], 
+											scene.lights[0].dir[2]);
 	
 	data.BlinnPhong.material.a = this->m.a;
 	data.BlinnPhong.material.d = this->m.d;

@@ -23,7 +23,7 @@ void get_location_blinnphong(GLuint program, ShaderHandler& handlers)
 	handlers.BlinnPhong.material.k_d = glGetUniformLocation(program, "kD"); OGL_OK
 	handlers.BlinnPhong.material.tex = glGetUniformLocation(program, "tex"); OGL_OK
 
-	handlers.BlinnPhong.light.pos = glGetUniformLocation(program, "light_pos"); OGL_OK
+	handlers.BlinnPhong.light.dir = glGetUniformLocation(program, "light_dir"); OGL_OK
 	handlers.BlinnPhong.light.color = glGetUniformLocation(program, "light_color"); OGL_OK
 }
 

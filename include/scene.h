@@ -7,12 +7,12 @@
 
 #include <vector>
 
-#include "point_light.h"
+#include "directional_light.h"
 
 class Scene
 {
 public:
-	std::vector<PointLight> lights;
+	std::vector<DirectionalLight> lights;
 	glm::vec3 cam;
 	glm::mat4 viewProj;
 };

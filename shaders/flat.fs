@@ -5,7 +5,7 @@ uniform sampler2D tex;
 uniform float kD; uniform vec3 d;
 uniform float kA; uniform vec3 a;
 
-uniform vec3 light_pos;
+uniform vec3 light_dir;
 uniform vec3 light_color;
 
 //fragment data
@@ -26,8 +26,7 @@ void main()
 	vec4 color_a = (texel + vec4(a, 1.0f)) * vec4(light_color, 1.0f);
 	
 	//diffuse component
-	vec3 point2light = normalize(light_pos - world_pos);
-	float f = max(dot(point2light, world_normal), 0.0f);
+	float f = max(dot(-light_dir, world_normal), 0.0f);
 
 	gl_FragColor = kA*color_a + f*kD*color_d;
 }

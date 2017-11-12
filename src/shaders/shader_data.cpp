@@ -24,7 +24,7 @@ void load_blinnphong_uniforms(const ShaderData& data, const ShaderHandler& handl
 	uniform3(handler.BlinnPhong.material.a, data.BlinnPhong.material.a);
 
 	//light settings
-	uniform3(handler.BlinnPhong.light.pos, data.BlinnPhong.light.pos);
+	uniform3(handler.BlinnPhong.light.dir, data.BlinnPhong.light.dir);
 	uniform3(handler.BlinnPhong.light.color, data.BlinnPhong.light.color);
 
 	//put the desired texture in slot 0,

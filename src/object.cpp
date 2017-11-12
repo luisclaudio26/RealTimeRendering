@@ -9,7 +9,13 @@ void Object::prepare_blinnphong(const Scene& scene, ShaderData& data)
 	data.BlinnPhong.vp = scene.viewProj;
 	data.BlinnPhong.cam = scene.cam;
 	data.BlinnPhong.model = this->model;
+	data.BlinnPhong.model_it = glm::transpose(glm::inverse(this->model));
 
+	data.BlinnPhong.light.color = scene.lights[0].color;
+	data.BlinnPhong.light.pos = glm::vec3(scene.lights[0].pos[0], 
+											scene.lights[0].pos[1], 
+											scene.lights[0].pos[2]);
+	
 	data.BlinnPhong.material.a = this->m.a;
 	data.BlinnPhong.material.d = this->m.d;
 	data.BlinnPhong.material.k_a = this->m.k_a;
@@ -45,6 +51,12 @@ void Object::prepare()
 
 void Object::draw(const Scene& scene, GLuint framebuffer)
 {
+	//TODO: we'll have multiple lights, so this function
+	//is responsible for deferred light rendering, i.e.
+	//baking geometry data into textures (normal, pos)
+	//then calling Phong computation shaders so to
+	//"paint" the result of one light and then summing
+	//the result up.
 	ShaderData data;
 	(this->*prepare_funcs[this->s.t])(scene, data);
 	s.draw(data, framebuffer);

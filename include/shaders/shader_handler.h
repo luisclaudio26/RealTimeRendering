@@ -8,11 +8,17 @@
 typedef union
 {
 	struct {
-		GLuint vp, model, cam;
+		GLuint vp, model, model_it, cam;
 
 		struct {
-			GLuint a, k_a, d, k_d, tex;
+			GLuint a, k_a;
+			GLuint d, k_d;
+			GLuint tex;
 		} material;
+
+		struct {
+			GLuint pos, color;
+		} light;
 	} BlinnPhong;
 
 	struct {

@@ -6,13 +6,6 @@
 #include <iostream>
 #include <cstring>
 
-#define PI 3.14159265359
-#define OGL_OK { \
-					GLenum err; \
-					if((err = glGetError()) != GL_NO_ERROR) \
-						std::cout<<"Error at "<<__FILE__<<", line "<<__LINE__<<": "<<err<<std::endl; \
-				}
-
 #include "../include/cube.h"
 #include "../include/plane.h"
 #include "../include/render_target.h"
@@ -29,15 +22,20 @@ int main(int argc, char** args)
 	glm::mat4 proj = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.01f, 20.0f);
 	scene.cam = glm::vec3(3.0f, 3.0f, 5.0f);
 
-	//render target
-	RenderTarget target;
+	scene.lights.push_back( PointLight() );
 
-	//geometry setup	
+	//geometry setup
 	Plane plane(BLINNPHONG); plane.prepare();
 	plane.model = glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 10.0f, 10.0f));
-	plane.m.load_ppm_texture("../data/bricks.bmp");
-	plane.m.k_a = 0.0f;
 
+	//plane.m.load_ppm_texture("../data/bricks.bmp");
+	plane.m.k_a = 0.0f; plane.m.k_d = 1.0f;
+
+	Cube cube(BLINNPHONG); cube.prepare();
+	cube.model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.5f, 0.0f));
+	cube.m.k_a = 0.0f; cube.m.k_d = 1.0f;
+
+	//------- main loop --------
 	do
 	{
 		//manage keyboard input
@@ -52,10 +50,14 @@ int main(int argc, char** args)
 								glm::vec3(0.0f, 1.0f, 0.0f) );	//Up
 		scene.viewProj = proj * view;
 
+		for(auto l = scene.lights.begin(); l != scene.lights.end(); ++l)
+			l->pos = glm::rotate(glm::mat4(1.0f), 0.05f, glm::vec3(0.0f, 1.0f, 0.0f)) * (l->pos);
+
 		//Clear screen -> this function also clears stencil and depth buffer
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 		//draw objects
+		cube.draw(scene);
 		plane.draw(scene);	
 
 		//Swap buffer and query events

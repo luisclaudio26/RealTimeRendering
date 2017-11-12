@@ -15,7 +15,7 @@
 typedef union ShaderData
 {
 	struct {
-		glm::mat4 vp, model;
+		glm::mat4 vp, model, model_it;
 		glm::vec3 cam;
 
 		struct {
@@ -23,6 +23,10 @@ typedef union ShaderData
 			float k_a, k_d;
 			GLuint tex;
 		} material;
+
+		struct {
+			glm::vec3 pos, color;
+		} light;
 	} BlinnPhong;
 
 	struct {

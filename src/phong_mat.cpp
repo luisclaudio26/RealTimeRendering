@@ -26,7 +26,7 @@ PhongMaterial::PhongMaterial()
 	glGenTextures(1, &this->tex);
 	glBindTexture(GL_TEXTURE_2D, this->tex);
 
-	GLubyte data[] = {255, 0, 0};
+	GLubyte data[] = {0, 0, 0};
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 }
 

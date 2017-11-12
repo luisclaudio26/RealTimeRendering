@@ -9,7 +9,7 @@
 struct PointLight
 {
 	glm::vec4 pos; 
-	glm::vec3 color;
+	glm::vec4 color;
 	float k;
 
 	PointLight();

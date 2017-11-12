@@ -27,13 +27,14 @@ int main(int argc, char** args)
 	//geometry setup
 	Plane plane(BLINNPHONG); plane.prepare();
 	plane.model = glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 10.0f, 10.0f));
-
-	//plane.m.load_ppm_texture("../data/bricks.bmp");
+	plane.m.load_ppm_texture("../data/bricks.bmp");
 	plane.m.k_a = 0.0f; plane.m.k_d = 1.0f;
+	plane.m.d = plane.m.a = glm::vec3(0.0f);
 
 	Cube cube(BLINNPHONG); cube.prepare();
 	cube.model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.5f, 0.0f));
-	cube.m.k_a = 0.0f; cube.m.k_d = 1.0f;
+	cube.m.a = cube.m.d = glm::vec3(1.0f, 1.0f, 1.0f);
+	cube.m.k_a = 0.2f; cube.m.k_d = 1.0f;
 
 	//------- main loop --------
 	do
@@ -51,7 +52,10 @@ int main(int argc, char** args)
 		scene.viewProj = proj * view;
 
 		for(auto l = scene.lights.begin(); l != scene.lights.end(); ++l)
+		{
 			l->pos = glm::rotate(glm::mat4(1.0f), 0.05f, glm::vec3(0.0f, 1.0f, 0.0f)) * (l->pos);
+			l->color = glm::rotate(glm::mat4(1.0f), 0.01f, glm::vec3(0.33333f, 0.33333f, 0.33333f)) * l->color;
+		}
 
 		//Clear screen -> this function also clears stencil and depth buffer
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );

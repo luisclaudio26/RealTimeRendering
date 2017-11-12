@@ -11,7 +11,10 @@ void Object::prepare_blinnphong(const Scene& scene, ShaderData& data)
 	data.BlinnPhong.model = this->model;
 	data.BlinnPhong.model_it = glm::transpose(glm::inverse(this->model));
 
-	data.BlinnPhong.light.color = scene.lights[0].color;
+	data.BlinnPhong.light.color = glm::vec3(scene.lights[0].color[0], 
+											scene.lights[0].color[1],
+											scene.lights[0].color[2]);
+	
 	data.BlinnPhong.light.pos = glm::vec3(scene.lights[0].pos[0], 
 											scene.lights[0].pos[1], 
 											scene.lights[0].pos[2]);
@@ -21,6 +24,7 @@ void Object::prepare_blinnphong(const Scene& scene, ShaderData& data)
 	data.BlinnPhong.material.k_a = this->m.k_a;
 	data.BlinnPhong.material.k_d = this->m.k_d;
 	data.BlinnPhong.material.tex = this->m.tex;
+	//data.BlinnPhong.material.pt = this->m.pt;
 }
 
 void Object::prepare_texturerenderer(const Scene& scene, ShaderData& data)

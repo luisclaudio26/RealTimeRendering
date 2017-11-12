@@ -2,7 +2,6 @@
 
 //uniform stuff
 uniform sampler2D tex;
-
 uniform float kD; uniform vec3 d;
 uniform float kA; uniform vec3 a;
 
@@ -16,17 +15,19 @@ in vec3 world_normal;
 
 void main() 
 {
-	//lookup texture
 	vec4 texel = texture2D(tex, frag_uv);
+
+	//color for object depends on the base colors
+	//defined and the texture. Correctly adjusting
+	//these values in the material settings lend
+	//to different blendings which can be used for
+	//various effects.	
+	vec4 color_d = (texel + vec4(d, 1.0f)) * vec4(light_color, 1.0f);
+	vec4 color_a = (texel + vec4(a, 1.0f)) * vec4(light_color, 1.0f);
 	
-	//compute illumination
+	//diffuse component
 	vec3 point2light = normalize(light_pos - world_pos);
 	float f = max(dot(point2light, world_normal), 0.0f);
 
-	vec4 pixel = vec4(kA*a + f*kD*d, 1.0f);
-
-	//if the user wants to use TEXTURE only,
-	//set material so that vertex color will
-	//be zero, and vice-versa
-	gl_FragColor = pixel + texel;
+	gl_FragColor = kA*color_a + f*kD*color_d;
 }

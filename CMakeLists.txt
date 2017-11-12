@@ -12,7 +12,8 @@ include_directories(${OPENGL_INCLUDE_DIR})
 
 #Source files
 file(GLOB SOURCES "src/*.cpp"
-					"src/shaders/*.cpp")
+					"src/shaders/*.cpp"
+					"3rdparty/*.c")
 
 #Link libraries
 find_package(OpenGL REQUIRED)

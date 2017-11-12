@@ -14,6 +14,8 @@ public:
 	float k_d; glm::vec3 d;
 
 	PhongMaterial();
+
+	void load_ppm_texture(const char* path);
 };
 
 #endif

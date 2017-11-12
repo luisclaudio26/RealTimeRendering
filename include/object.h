@@ -32,6 +32,7 @@ protected:
 	unsigned int* edges; int n_edges;
 
 	virtual void load_geometry() = 0;
+
 public:
 	glm::mat4 model;
 	PhongMaterial m;

@@ -21,7 +21,7 @@ void Object::prepare_texturerenderer(const Scene& scene, ShaderData& data)
 {
 	data.TextureRenderer.vp = scene.viewProj;
 	data.TextureRenderer.cam = scene.cam;
-	//data.TextureRenderer.tex = this->myTex;
+	data.TextureRenderer.tex = this->m.tex;
 	data.TextureRenderer.model = this->model;
 }
 

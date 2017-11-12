@@ -1,6 +1,10 @@
 #version 330
 
-in vec4 texelColor;
+//uniform stuff
+uniform sampler2D tex;
+
+//fragment data
+in vec2 frag_uv;
 in vec4 vertexColor;
 
 void main() 
@@ -8,5 +12,6 @@ void main()
 	//if the user wants to use TEXTURE only,
 	//set material so that vertex color will
 	//be zero, and vice-versa
-	gl_FragColor = vertexColor + texelColor;
+	vec4 texel = texture2D(tex, frag_uv);
+	gl_FragColor = texel;
 }

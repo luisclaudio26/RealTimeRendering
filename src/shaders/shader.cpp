@@ -72,10 +72,14 @@ GLuint Shader::get_shader_program(const std::string& path)
 	GLuint f_shader_id = compile_file(f_path, GL_FRAGMENT_SHADER);
 
 	//Create program, attach and link compiled shaders
-	GLuint program_id = glCreateProgram();
-	glAttachShader(program_id, v_shader_id);
-	glAttachShader(program_id, f_shader_id);
-	glLinkProgram(program_id);
+	GLuint program_id = glCreateProgram(); OGL_OK
+	glAttachShader(program_id, v_shader_id); OGL_OK
+	glAttachShader(program_id, f_shader_id); OGL_OK
+	glLinkProgram(program_id); OGL_OK
+
+	char buffer[1000];
+	glGetProgramInfoLog(program_id, 1000, NULL, buffer);
+	std::cout<<"Shader linking log: "<<buffer<<std::endl;
 
 	return program_id;
 }
@@ -99,6 +103,7 @@ void Shader::select_shader(ShaderType t)
 	case TEXTURERENDERER:
 		this->t = t;
 		this->h_program = get_shader_program("../shaders/textureRenderer");
+		break;
 	}
 
 	//get handlers for this shader

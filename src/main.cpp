@@ -32,10 +32,9 @@ int main(int argc, char** args)
 	//render target
 	RenderTarget target;
 
-	//geometry setup
-	Cube cube(BLINNPHONG); cube.prepare();
-	Plane plane(TEXTURERENDERER); plane.prepare();
-	plane.myTex = target.h_renderedTexture;
+	//geometry setup	
+	Plane plane(BLINNPHONG); plane.prepare();
+	plane.model = glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 10.0f, 10.0f));
 
 	do
 	{
@@ -55,7 +54,6 @@ int main(int argc, char** args)
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 		//draw objects
-		cube.draw(scene, target.h_framebuffer);
 		plane.draw(scene);	
 
 		//Swap buffer and query events

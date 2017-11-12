@@ -24,7 +24,6 @@ private:
 
 	GLuint h_VAO, h_program, h_data, h_indices;
 	int n_indices;
-
 	
 	ShaderHandler handlers;
 

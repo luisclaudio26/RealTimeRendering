@@ -21,6 +21,7 @@ typedef union ShaderData
 		struct {
 			glm::vec3 a, d;
 			float k_a, k_d;
+			GLuint tex;
 		} material;
 	} BlinnPhong;
 

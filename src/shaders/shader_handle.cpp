@@ -20,6 +20,7 @@ void get_location_blinnphong(GLuint program, ShaderHandler& handlers)
 	handlers.BlinnPhong.material.k_a = glGetUniformLocation(program, "model.kA"); OGL_OK
 	handlers.BlinnPhong.material.d = glGetUniformLocation(program, "model.d"); OGL_OK
 	handlers.BlinnPhong.material.k_d = glGetUniformLocation(program, "model.kD"); OGL_OK
+	handlers.BlinnPhong.material.tex = glGetUniformLocation(program, "model.tex"); OGL_OK
 }
 
 void get_location_texturerenderer(GLuint program, ShaderHandler& handlers)

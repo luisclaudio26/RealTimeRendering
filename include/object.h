@@ -17,18 +17,24 @@
 
 class Object
 {
+private:
+	typedef void (Object::*Prepare_func)(const Scene&, ShaderData&);
+
+	void prepare_blinnphong(const Scene& scene, ShaderData& data);
+	void prepare_texturerenderer(const Scene& scene, ShaderData& data);
+
+	Prepare_func prepare_funcs[2];
+
 protected:
 	Shader s;
-	PhongMaterial m;
-
-	glm::mat4 model;
-
+	
 	Vertex* vertices; int n_vertices;
 	unsigned int* edges; int n_edges;
 
 	virtual void load_geometry() = 0;
 public:
-	GLuint myTex;
+	glm::mat4 model;
+	PhongMaterial m;
 
 	Object(ShaderType t);
 

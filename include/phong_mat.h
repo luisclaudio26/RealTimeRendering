@@ -8,6 +8,8 @@
 class PhongMaterial
 {
 public:
+	GLuint tex;
+
 	float k_a; glm::vec3 a;
 	float k_d; glm::vec3 d;
 

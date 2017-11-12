@@ -11,7 +11,7 @@ typedef union
 		GLuint vp, model, cam;
 
 		struct {
-			GLuint a, k_a, d, k_d;
+			GLuint a, k_a, d, k_d, tex;
 		} material;
 	} BlinnPhong;
 

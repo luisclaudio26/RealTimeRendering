@@ -27,6 +27,12 @@ void load_blinnphong_uniforms(const ShaderData& data, const ShaderHandler& handl
 	glUniform3f(handler.BlinnPhong.material.a, data.BlinnPhong.material.a[0], 
 												data.BlinnPhong.material.a[1],
 												data.BlinnPhong.material.a[2]);
+
+	//put the desired texture in slot 0,
+	//then upload slot zero into shader uniform	
+	glActiveTexture(GL_TEXTURE0); //activate slot zero
+	glBindTexture(GL_TEXTURE_2D, data.BlinnPhong.material.tex); //bind texture to previously activated slot
+	glUniform1i(handler.BlinnPhong.material.tex, 0); //upload Zero to TEX uniform
 }
 
 void load_texturerenderer_uniforms(const ShaderData& data, const ShaderHandler& handler)

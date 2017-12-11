@@ -36,6 +36,10 @@ int main(int argc, char** args)
 	cube.m.a = cube.m.d = glm::vec3(1.0f, 1.0f, 1.0f);
 	cube.m.k_a = 0.2f; cube.m.k_d = 1.0f;
 
+	std::vector<Object*> pool;
+	pool.push_back(&cube);
+	pool.push_back(&plane);
+
 	//------- main loop --------
 	do
 	{
@@ -61,8 +65,8 @@ int main(int argc, char** args)
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 		//draw objects
-		cube.draw(scene);
-		plane.draw(scene);	
+		for(auto obj = pool.begin(); obj != pool.end(); ++obj)
+			(*obj)->draw(scene);
 
 		//Swap buffer and query events
 		glfwSwapBuffers(window);

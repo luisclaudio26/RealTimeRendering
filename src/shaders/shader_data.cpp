@@ -4,7 +4,7 @@
 #define uniform3(h, v3) glUniform3f(h, v3[0], v3[1], v3[2])
 
 uniform_loader_func uniform_loaders[] = { load_blinnphong_uniforms, 
-											load_texturerenderer_uniforms };
+											load_shadowmapper_uniforms };
 
 void load_blinnphong_uniforms(const ShaderData& data, const ShaderHandler& handler)
 {
@@ -34,18 +34,8 @@ void load_blinnphong_uniforms(const ShaderData& data, const ShaderHandler& handl
 	glUniform1i(handler.BlinnPhong.material.tex, 0); //upload Zero to TEX uniform
 }
 
-void load_texturerenderer_uniforms(const ShaderData& data, const ShaderHandler& handler)
+void load_shadowmapper_uniforms(const ShaderData& data, const ShaderHandler& handler)
 {
-	glUniformMatrix4fv(handler.TextureRenderer.vp, 1, GL_FALSE, &data.TextureRenderer.vp[0][0]);
-	glUniformMatrix4fv(handler.TextureRenderer.model, 1, GL_FALSE, &data.TextureRenderer.model[0][0]);
-
-	glUniform3f(handler.TextureRenderer.cam, data.TextureRenderer.cam[0], 
-										data.TextureRenderer.cam[1], 
-										data.TextureRenderer.cam[2]);
-
-	//put the desired texture in slot 0,
-	//then upload slot zero into shader uniform
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, data.TextureRenderer.tex);
-	glUniform1i(handler.TextureRenderer.tex, 0);
+	glUniformMatrix4fv(handler.ShadowMapper.vp, 1, GL_FALSE, &data.ShadowMapper.vp[0][0]);
+	glUniformMatrix4fv(handler.ShadowMapper.model, 1, GL_FALSE, &data.ShadowMapper.model[0][0]);
 }

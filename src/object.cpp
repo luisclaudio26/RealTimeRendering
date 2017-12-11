@@ -24,15 +24,20 @@ void Object::prepare_blinnphong(const Scene& scene, ShaderData& data)
 	data.BlinnPhong.material.k_a = this->m.k_a;
 	data.BlinnPhong.material.k_d = this->m.k_d;
 	data.BlinnPhong.material.tex = this->m.tex;
-	//data.BlinnPhong.material.pt = this->m.pt;
 }
 
-void Object::prepare_texturerenderer(const Scene& scene, ShaderData& data)
+void Object::prepare_shadowmapper(const Scene& scene, ShaderData& data)
 {
-	data.TextureRenderer.vp = scene.viewProj;
-	data.TextureRenderer.cam = scene.cam;
-	data.TextureRenderer.tex = this->m.tex;
-	data.TextureRenderer.model = this->model;
+
+	glm::mat4 proj = glm::ortho<float>(-10, 10, -10, 10, -10, 20);
+
+	glm::vec3 lDir = glm::vec3(scene.lights[0].dir[0], 
+								scene.lights[0].dir[1], 
+								scene.lights[0].dir[2]);
+	glm::mat4 view = glm::lookAt(lDir, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+	data.ShadowMapper.vp = proj * view;
+	data.ShadowMapper.model = this->model;
 }
 
 //--------------------------------------------------------
@@ -44,7 +49,7 @@ Object::Object(ShaderType t)
 	this->s.select_shader(t);
 
 	prepare_funcs[0] = &Object::prepare_blinnphong;
-	prepare_funcs[1] = &Object::prepare_texturerenderer;
+	prepare_funcs[1] = &Object::prepare_shadowmapper;
 }
 
 void Object::prepare()

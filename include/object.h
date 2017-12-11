@@ -21,12 +21,12 @@ private:
 	typedef void (Object::*Prepare_func)(const Scene&, ShaderData&);
 
 	void prepare_blinnphong(const Scene& scene, ShaderData& data);
-	void prepare_texturerenderer(const Scene& scene, ShaderData& data);
+	void prepare_shadowmapper(const Scene& scene, ShaderData& data);
 
 	Prepare_func prepare_funcs[2];
 
 protected:
-	Shader s;
+	
 	
 	Vertex* vertices; int n_vertices;
 	unsigned int* edges; int n_edges;
@@ -34,6 +34,7 @@ protected:
 	virtual void load_geometry() = 0;
 
 public:
+	Shader s;
 	glm::mat4 model;
 	PhongMaterial m;
 

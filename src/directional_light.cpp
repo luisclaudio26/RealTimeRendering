@@ -6,3 +6,8 @@ DirectionalLight::DirectionalLight()
 	color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 	k = 1.0f;
 }
+
+void DirectionalLight::compute_shadow_map( const std::vector<Object*>& pool )
+{
+	
+}

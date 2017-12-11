@@ -31,9 +31,7 @@ typedef union ShaderData
 
 	struct {
 		glm::mat4 vp, model;
-		glm::vec3 cam;
-		GLuint tex;
-	} TextureRenderer;	
+	} ShadowMapper;	
 
 	ShaderData() {}
 } ShaderData;
@@ -41,7 +39,7 @@ typedef union ShaderData
 typedef void (*uniform_loader_func)(const ShaderData&, const ShaderHandler&);
 
 void load_blinnphong_uniforms(const ShaderData& data, const ShaderHandler& handler);
-void load_texturerenderer_uniforms(const ShaderData& data, const ShaderHandler& handler);
+void load_shadowmapper_uniforms(const ShaderData& data, const ShaderHandler& handler);
 extern uniform_loader_func uniform_loaders[2];
 
 #endif

@@ -100,9 +100,9 @@ void Shader::select_shader(ShaderType t)
 		this->t = t;
 		this->h_program = get_shader_program("../shaders/flat");
 		break;
-	case TEXTURERENDERER:
+	case SHADOWMAPPER:
 		this->t = t;
-		this->h_program = get_shader_program("../shaders/textureRenderer");
+		this->h_program = get_shader_program("../shaders/shadowMap");
 		break;
 	}
 

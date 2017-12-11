@@ -12,7 +12,7 @@
 enum ShaderType
 {
 	BLINNPHONG = 0,
-	TEXTURERENDERER = 1,
+	SHADOWMAPPER = 1,
 };
 
 class Shader
